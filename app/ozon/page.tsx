@@ -39,18 +39,21 @@ export default function OzonPage() {
       description: "Расчет прибыльности товаров с учетом всех затрат Ozon",
       path: "/ozon/unit-economics",
       color: "bg-blue-500 hover:bg-blue-600",
+      needsApi: true, // Нужны API ключи
     },
     {
       title: "Информация по продажам",
       description: "Детальная аналитика продаж и трендов",
       path: "/ozon/sales",
       color: "bg-green-500 hover:bg-green-600",
+      needsApi: true, // Нужны API ключи
     },
     {
       title: "Информация по кластерам",
       description: "Анализ товарных кластеров и категорий",
       path: "/ozon/cluster-analysis",
       color: "bg-orange-500 hover:bg-orange-600",
+      needsApi: false, // НЕ нужны API ключи!
     },
   ];
 
@@ -152,8 +155,9 @@ export default function OzonPage() {
             <button
               key={index}
               onClick={() => {
-                if (!isSaved) {
-                  alert("Сначала настройте API ключи");
+                // Проверяем только если нужны API ключи
+                if (feature.needsApi && !isSaved) {
+                  alert("Для этого раздела нужны API ключи");
                   setShowApiSettings(true);
                   return;
                 }
@@ -163,6 +167,12 @@ export default function OzonPage() {
             >
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
               <p className="text-sm opacity-90">{feature.description}</p>
+              {/* Индикатор нужны ли ключи */}
+              {feature.needsApi && !isSaved && (
+                <div className="mt-2 text-xs bg-white bg-opacity-20 rounded-full px-2 py-1 inline-block">
+                  🔑 Требуются API ключи
+                </div>
+              )}
             </button>
           ))}
         </div>
