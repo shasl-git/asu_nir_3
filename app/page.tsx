@@ -1,6 +1,14 @@
 import Link from "next/link";
+import { getServerSession } from '../lib/auth';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await getServerSession();
+  if (!session) {
+    redirect('/login');
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-4xl mx-auto text-center">
