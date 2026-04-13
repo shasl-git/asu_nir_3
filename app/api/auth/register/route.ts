@@ -29,14 +29,14 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
     
-    response.cookies.set({
-      name: 'session',
-      value: token,
-      httpOnly: true,
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
-      sameSite: 'lax',
-    });
+    // response.cookies.set({
+    //   name: 'session',
+    //   value: token,
+    //   httpOnly: true,
+    //   path: '/',
+    //   maxAge: 60 * 60 * 24 * 7,
+    //   sameSite: 'lax',
+    // });
     
     return response;
   } catch (error: any) {

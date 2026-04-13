@@ -26,30 +26,19 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Если пользователь авторизован и пытается зайти на login/register
+  // Если пользователь авторизован и пытается зайти на login или register
   if (isAuthenticated && isPublicPath) {
-    console.log('[Proxy] Auth user on public path -> redirect to /');
+    console.log('[Proxy] Redirecting authenticated user from public page to /');
     return NextResponse.redirect(new URL('/', request.url));
   }
   
-  // Если пользователь НЕ авторизован и пытается зайти на защищённую страницу
-  if (!isAuthenticated && !isPublicPath && pathname !== '/') {
-    console.log('[Proxy] Unauth user on protected path -> redirect to /login');
+  // Если пользователь НЕ авторизован и пытается зайти на любую страницу, кроме login/register
+  if (!isAuthenticated && !isPublicPath) {
+    console.log('[Proxy] Redirecting unauthenticated user to /login');
     return NextResponse.redirect(new URL('/login', request.url));
   }
   
-  // Если пользователь авторизован и на главной (/)
-  if (isAuthenticated && pathname === '/') {
-    console.log('[Proxy] Auth user on / -> allow');
-    return NextResponse.next();
-  }
-  
-  // Если пользователь не авторизован на главной
-  if (!isAuthenticated && pathname === '/') {
-    console.log('[Proxy] Unauth user on / -> redirect to /login');
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-  
+  // ВСЕ ОСТАЛЬНЫЕ СЛУЧАИ - пропускаем (включая / для авторизованных пользователей)
   return NextResponse.next();
 }
 

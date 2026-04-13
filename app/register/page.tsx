@@ -44,10 +44,10 @@ export default function RegisterPage() {
         return;
       }
 
-      console.log('Registration successful, redirecting...');
+      console.log('Registration successful, redirecting to login');
       
       // Редирект после успешной регистрации
-      await router.push('/');
+      router.push('/login');
       router.refresh();
       
       setTimeout(() => {

@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { getServerSession } from '../lib/auth';
-import { redirect } from 'next/navigation';
+import LogoutButton from '../components/LogoutButton';
 
 export default async function Home() {
-  // Проверяем авторизацию
+  // Проверяем авторизацию (редирект делает proxy, не здесь)
   const session = await getServerSession();
-  if (!session) {
-    redirect('/login');
-  }
-
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 relative">
+      {/* Кнопка выхода в правом верхнем углу */}
+      <LogoutButton />
+      
       <div className="max-w-4xl mx-auto text-center">
         {/* Заголовок */}
         <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
