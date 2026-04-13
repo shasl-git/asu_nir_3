@@ -51,8 +51,8 @@ export default function RegisterPage() {
       router.refresh();
       
       setTimeout(() => {
-        if (window.location.pathname !== '/dashboard') {
-          window.location.href = '/dashboard';
+        if (window.location.pathname !== '/') {
+          window.location.href = '/';
         }
       }, 100);
       
