@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { getServerSession } from '../lib/auth';
 import LogoutButton from '../components/LogoutButton';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
   // Проверяем авторизацию (редирект делает proxy, не здесь)
   const session = await getServerSession();
-  
+  if (!session) {
+    redirect('/login');
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 relative">
       {/* Кнопка выхода в правом верхнем углу */}

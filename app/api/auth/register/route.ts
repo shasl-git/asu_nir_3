@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser } from '@/lib/db';
-import { createSessionToken } from '@/lib/auth';
+import { createUser } from '../../../../lib/db';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,23 +21,13 @@ export async function POST(request: NextRequest) {
     }
 
     const user = await createUser(email, password);
-    const token = createSessionToken(user);
     
-    const response = NextResponse.json(
-      { success: true, user: { id: user.id, email: user.email } },
+    // Возвращаем успешный ответ без установки сессии
+    return NextResponse.json(
+      { success: true, message: 'Регистрация успешна! Теперь войдите.' },
       { status: 201 }
     );
     
-    // response.cookies.set({
-    //   name: 'session',
-    //   value: token,
-    //   httpOnly: true,
-    //   path: '/',
-    //   maxAge: 60 * 60 * 24 * 7,
-    //   sameSite: 'lax',
-    // });
-    
-    return response;
   } catch (error: any) {
     console.error('Registration error:', error);
     return NextResponse.json(

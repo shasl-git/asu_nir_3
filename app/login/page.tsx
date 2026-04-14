@@ -1,3 +1,4 @@
+// app/login/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -31,9 +32,8 @@ export default function LoginPage() {
         return;
       }
 
-      // Успешный вход — используем router.push
       console.log('Login successful');
-      router.push('/');  // перенаправляем на главную страницу
+      router.push('/');
       router.refresh();
       
     } catch (err) {

@@ -39,31 +39,22 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || `Ошибка: ${res.status}`);
+        setError(data.error || 'Ошибка при регистрации');
         setLoading(false);
         return;
       }
 
       console.log('Registration successful, redirecting to login');
-      
-      // Редирект после успешной регистрации
       router.push('/login');
       router.refresh();
       
-      setTimeout(() => {
-        if (window.location.pathname !== '/') {
-          window.location.href = '/';
-        }
-      }, 100);
-      
     } catch (err) {
-      console.error('Registration fetch error:', err);
-      setError('Ошибка сети. Проверьте соединение.');
+      console.error('Registration error:', err);
+      setError('Ошибка сети. Попробуйте позже.');
       setLoading(false);
     }
   };
 
-  // ... остальной JSX такой же, как в login, но с полем confirmPassword и текстом "Регистрация"
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
@@ -90,9 +81,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="email"
-              name="email"
               type="email"
-              autoComplete="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -106,9 +95,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="password"
-              name="password"
               type="password"
-              autoComplete="new-password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -122,9 +109,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="confirmPassword"
-              name="confirmPassword"
               type="password"
-              autoComplete="off"
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
